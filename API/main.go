@@ -15,6 +15,7 @@ import (
 )
 
 type record struct {
+	Fecha           string `json:"fecha"`
 	Nombre_empleado string `json:"nombre"`
 	Emocion         string `json:"emocion"`
 }
@@ -29,9 +30,28 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func returnAllRecords(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Endpoint Hit: returnAllArticles")
 	w.Header().Add("Content-Type", "JSON")
+
+	results, err := db.Query("SELECT create_time, name, emotion FROM EMPLEADO_EMOTIONS")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for results.Next() {
+		var dbRecord record
+		err = results.Scan(&dbRecord.Fecha,&dbRecord.Nombre_empleado,&dbRecord.Emocion)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		records = append(records, dbRecord)
+	}
+
 	json.NewEncoder(w).Encode(records)
+
+	records = []record{}
 }
 
 func createNewRecord(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +63,7 @@ func createNewRecord(w http.ResponseWriter, r *http.Request) {
 	records = append(records, newRecord)
 	currentTime := time.Now()
 
-	insert, err := db.Query("INSERT INTO EMPLEADO_EMOTIONS (create_time, name, emotion) VALUES ('"+currentTime.Format("2006.01.02 15:04:05")+"','"+newRecord.Nombre_empleado+"','"+newRecord.Emocion+"')")
+	insert, err := db.Query("INSERT INTO EMPLEADO_EMOTIONS (create_time, name, emotion) VALUES ('" + currentTime.Format("2006.01.02 15:04:05") + "','" + newRecord.Nombre_empleado + "','" + newRecord.Emocion + "')")
 
 	if err != nil {
 		panic(err.Error())
@@ -52,13 +72,11 @@ func createNewRecord(w http.ResponseWriter, r *http.Request) {
 	defer insert.Close()
 
 	json.NewEncoder(w).Encode(newRecord)
-
-	
 }
 
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
-	
+
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/allrecords", returnAllRecords)
 	myRouter.HandleFunc("/record", createNewRecord).Methods("POST")
@@ -66,15 +84,8 @@ func handleRequests() {
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
-
 func main() {
-	
-	// records = []record{
-		// 	{Nombre_empleado: "Nicko", Emocion: "Feliz"},
-		// 	{Nombre_empleado: "Chris", Emocion: "Pensativo"},
-		// 	{Nombre_empleado: "Ulfran", Emocion: "Dudoso"},
-		// }
-		
+
 	db, err = sql.Open("mysql", "emotionalUser:passwdEmotional@tcp(127.0.0.1:23306)/db_emotions")
 
 	if err != nil {
