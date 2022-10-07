@@ -24,12 +24,12 @@ var records []record
 var db *sql.DB
 var err error
 
-func homePage(w http.ResponseWriter, r *http.Request) {
+func homePage(w http.ResponseWriter, _ *http.Request) {
 	fmt.Fprintf(w, "Hola Mundo")
 	fmt.Println("Endpoint Hit: homePage")
 }
 
-func returnAllRecords(w http.ResponseWriter, r *http.Request) {
+func returnAllRecords(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Add("Content-Type", "JSON")
 
 	results, err := db.Query("SELECT create_time, name, emotion FROM EMPLEADO_EMOTIONS")
