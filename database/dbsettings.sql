@@ -4,3 +4,5 @@ CREATE TABLE EMPLEADO_EMOTIONS(
     name VARCHAR(255),
     emotion VARCHAR(255)
 ) COMMENT '';
+
+INSERT INTO EMPLEADO_EMOTIONS (create_time, name, emotion) VALUES ("2006-12-31 13:25:55", 'Test_empleado', 'Test_emotion')
