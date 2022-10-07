@@ -72,6 +72,8 @@ func createNewRecord(w http.ResponseWriter, r *http.Request) {
 	defer insert.Close()
 
 	json.NewEncoder(w).Encode(newRecord)
+
+	records = []record{}
 }
 
 func handleRequests() {
@@ -93,7 +95,6 @@ func main() {
 	}
 
 	defer db.Close()
-	// fmt.Println("Exito")
 
 	handleRequests()
 }
