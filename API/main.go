@@ -35,7 +35,6 @@ func returnAllRecords(w http.ResponseWriter, _ *http.Request) {
 	results, err := db.Query("SELECT create_time, name, emotion FROM EMPLEADO_EMOTIONS")
 
 	if err != nil {
-		fmt.Println("mamo")
 		panic(err.Error())
 	}
 
@@ -72,8 +71,6 @@ func createNewRecord(w http.ResponseWriter, r *http.Request) {
 
 	defer insert.Close()
 
-	fmt.Println("inserto")
-
 	json.NewEncoder(w).Encode(newRecord)
 
 	records = []record{}
@@ -91,7 +88,7 @@ func handleRequests() {
 
 func main() {
 
-	db, err = sql.Open("mysql", "emotionalUser:passwdEmotional@tcp(mysql_host:23306)/db_emotions")
+	db, err = sql.Open("mysql", "emotionalUser:passwdEmotional@tcp(mysql_DB)/db_emotions")
 
 	if err != nil {
 		panic(err.Error())

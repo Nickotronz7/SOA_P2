@@ -1,3 +1,4 @@
+-- Active: 1665102474961@@127.0.0.1@3306@db_emotions
 CREATE TABLE EMPLEADO_EMOTIONS(  
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     create_time DATETIME COMMENT 'Create Time',
