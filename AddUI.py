@@ -1,11 +1,14 @@
+from logging import RootLogger
 from tkinter import * 
-from tkinter.ttk import *
+
 from tkinter.filedialog import askopenfile 
 from tkinter import messagebox
 
+
 #open tk window
 root = Tk() 
-root.geometry('845x500') 
+root.geometry('600x500') 
+root.title('AddUI')
 
 ###########################################################################
 #stores the list with the images to be send. Needs 10
@@ -16,8 +19,10 @@ label_list=[]
   
 #open file and store it
 def open_file(): 
+    #only images can be uploaded
     file = askopenfile(mode ='rb', filetypes =[('Image files', '.jpg .jpeg .img .png .gif .bmp')]) 
     if file is not None: 
+        #read the file, convert to byte arrae and add it to the UI list if len(list)<=10
         image_readed = file.read()
         image_bytearray = bytearray(image_readed)
         images_bytearray_list.append(image_bytearray)
@@ -27,8 +32,10 @@ def open_file():
             messagebox.showwarning(title=None, message='Solo se pueden introducir 10 imágenes') 
         
         
-
+#sends the file to the broker
 def send_files():
+    if(len(images_bytearray_list)<10):
+        messagebox.showwarning(title=None, message='Se deben introducir 10 imágenes') 
     return 0
 
 ###########################################################################
@@ -38,15 +45,18 @@ def send_files():
 title_frame = Frame(root)
 title_frame.pack(side=TOP)
 
-title=Label(title_frame, text="Add UI", font=("Arial Bold", 30))
-title.pack(side=TOP)
+#title
+title=Label(title_frame, text="Add UI", font=("Arial Bold", 30), width=600, bg= '#0066CC', fg='white')
+title.pack(pady=3)
 
 
 #instructions on how to use the app
-instructions=Label(title_frame, text="Por favor, agrega 10 imagenes para enviar", font=("Arial Bold", 12))
-instructions.pack(side=LEFT)
+instructions=Label(title_frame, text="Por favor, agrega 10 imágenes para enviar", font=("Arial Bold", 12))
+instructions.pack(pady=3)
 
-
+#label that indicate current images
+added_images=Label(title_frame, text="Imágenes agreagadas:", font=("Arial ", 12))
+added_images.pack(pady=3)
 
 
 #frame with the images names
@@ -54,7 +64,7 @@ instructions.pack(side=LEFT)
 images_names_frame = Frame(root, height=350)
 images_names_frame.pack(side=TOP)
 
-#label for the 10 images
+#labels for the 10 images
 label1=Label(images_names_frame, text='' , font=("Arial", 12))
 label1.pack(side=TOP)
 
@@ -101,10 +111,11 @@ label_list.append(label9)
 label_list.append(label10)
 
 #trigers the open file function
-search_btn = Button(buttons_frame, text ='Seleccionar imagen', command = open_file) 
+search_btn = Button(buttons_frame, text ='Seleccionar imagen', command = open_file, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
 search_btn.pack(side=LEFT,padx=10) 
 
-search_btn = Button(buttons_frame, text ='Enviar imagenes', command = send_files) 
+#trigers the send files function
+search_btn = Button(buttons_frame, text ='Enviar imágenes', command = send_files, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
 search_btn.pack(side=LEFT,padx=5) 
 
 
