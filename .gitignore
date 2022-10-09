@@ -4,3 +4,4 @@ images
 .DS_Store
 API/API
 schemas/*
+.vscode
