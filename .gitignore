@@ -1,6 +1,2 @@
 venv
 images
-*.exe
-.DS_Store
-API/API
-schemas/*
