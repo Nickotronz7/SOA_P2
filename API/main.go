@@ -6,21 +6,35 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
+	"strings"
 
 	"github.com/gorilla/mux"
 
 	"database/sql"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type empleado struct {
+	Nombre  string `json:"name"`
+	Emocion string `json:"emotion"`
+}
 type record struct {
+	Fecha     string     `json:"date"`
+	Empleados []empleado `json:"employees"`
+}
+
+type dbRecord struct {
 	Fecha           string `json:"fecha"`
 	Nombre_empleado string `json:"nombre"`
 	Emocion         string `json:"emocion"`
 }
 
-var records []record
+type response struct {
+	Records []dbRecord `json:"response"`
+}
+
+var records []dbRecord
 var db *sql.DB
 var err error
 
@@ -39,41 +53,65 @@ func returnAllRecords(w http.ResponseWriter, _ *http.Request) {
 	}
 
 	for results.Next() {
-		var dbRecord record
-		err = results.Scan(&dbRecord.Fecha,&dbRecord.Nombre_empleado,&dbRecord.Emocion)
+		var dbResponse dbRecord
+		err = results.Scan(&dbResponse.Fecha,&dbResponse.Nombre_empleado,&dbResponse.Emocion)
 
 		if err != nil {
 			panic(err.Error())
 		}
 
-		records = append(records, dbRecord)
+		records = append(records, dbResponse)
 	}
 
-	json.NewEncoder(w).Encode(records)
+	var finalResponse response
 
-	records = []record{}
+	finalResponse.Records = records
+
+	json.NewEncoder(w).Encode(finalResponse)
+
+	records = []dbRecord{}
 }
 
 func createNewRecord(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "JSON")
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var newRecord record
-	json.Unmarshal(reqBody, &newRecord)
-
-	records = append(records, newRecord)
-	currentTime := time.Now()
-
-	insert, err := db.Query("INSERT INTO EMPLEADO_EMOTIONS (create_time, name, emotion) VALUES ('" + currentTime.Format("2006.01.02 15:04:05") + "','" + newRecord.Nombre_empleado + "','" + newRecord.Emocion + "')")
+	err := json.Unmarshal(reqBody, &newRecord)
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	defer insert.Close()
+	fecha_tmp := fixdate(strings.Split(newRecord.Fecha, "/"))
+	var fecha string
+	
+	for f := 0; f < len(fecha_tmp); f++ {
+		fecha = fecha + string(fecha_tmp[f])
+	}
+
+	var newEmpleado empleado
+	for i := 0; i < len(newRecord.Empleados); i++ {
+		newEmpleado = newRecord.Empleados[i]
+		
+		insert, err := db.Query("INSERT INTO EMPLEADO_EMOTIONS (create_time, name, emotion) VALUES ('" + fecha + "','" + newEmpleado.Nombre + "','" + newEmpleado.Emocion + "')")
+		
+		if err != nil {
+			panic(err.Error())
+		}
+
+		defer insert.Close()
+	}
 
 	json.NewEncoder(w).Encode(newRecord)
 
-	records = []record{}
+	records = []dbRecord{}
+}
+
+func fixdate(input []string) []string {
+	if (len(input) == 0) {
+		return input
+	}
+	return append(fixdate(input[1:]), input[0])
 }
 
 func handleRequests() {
