@@ -4,7 +4,7 @@ import base64
 from tkinter.filedialog import askopenfile 
 from tkinter import messagebox
 from event_processor import process_publisher
-
+from datetime import datetime
 
 #open tk window
 root = Tk() 
@@ -45,7 +45,17 @@ def send_files():
         return 0
     # If the expected number of images is satisfied, then publish the data to the Broker
     print("Preparing the images...")
-    process_publisher(images_bytearray_list)
+    # Get the current date
+    now = datetime.now() # current date and time
+    date = now.strftime("%m/%d/%Y")
+    
+    # Prepare a JSON Object with the necessary data
+    json_object = {
+        "date": date,
+        "employees": images_bytearray_list
+    }
+                             
+    process_publisher(json_object)
     
 
 ###########################################################################

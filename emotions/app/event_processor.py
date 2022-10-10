@@ -1,6 +1,7 @@
 import pika
 import threading
 import json
+import os
 from vision import analyze_emotion
 
 def on_message_received(ch, method, properties, body):
@@ -17,11 +18,15 @@ def on_message_received(ch, method, properties, body):
     print("Receiving employees information....")
     # Load the JSON data received
     received_message = json.loads(body)
+    # Get the date from the JSON
+    date = received_message['date']
+    # Get the employees information
+    employees = received_message['employees']
     # Create n array to store JSON Objects inside it
     employees_emotions = []
     print("Analyzing employees emotions....")
     # Loop the employees JSON Array and analyze data
-    for employee in received_message:
+    for employee in employees:
         # Get the exact data from every employee
         emp_name = employee['name']
         emp_image = employee['image']
@@ -36,8 +41,12 @@ def on_message_received(ch, method, properties, body):
             }
         )
     print("employees emotions analyzed....")
-    # Prepear the employees analyzed data in a JSON array object
-    message = json.dumps(employees_emotions)
+    # Prepare the employees analyzed data in a JSON Object
+    json_object = {
+        "date": date,
+        "employees": employees_emotions
+    }
+    message = json.dumps(json_object)
     # Deliver the results to the next event processor by using the publisher connection
     publisher_thread = threading.Thread(target=process_publisher, args=(message,))
     publisher_thread.start()
@@ -47,8 +56,13 @@ def process_consumer():
     to receive messages from the queue.
     The connection keeps running until the program is finished
     """
+    # Get enviromental variables
+    host = os.environ['RABBIT_HOST']
+    port = os.environ['RABBIT_PORT']
+    queue = os.environ['RABBIT_CONSUMER_QUEUE']
+    
     # create the Message Broker connection parameters
-    connection_parameters = pika.ConnectionParameters('localhost')
+    connection_parameters = pika.ConnectionParameters(host=host, port=port)
 
     # Create a new connection
     connection = pika.BlockingConnection(connection_parameters)
@@ -57,9 +71,9 @@ def process_consumer():
     channel = connection.channel() # We don't give a name because we're using the default channel
 
     # Declaring a queue
-    channel.queue_declare(queue='load-images')
+    channel.queue_declare(queue=queue)
 
-    channel.basic_consume(queue='load-images', auto_ack=True, 
+    channel.basic_consume(queue=queue, auto_ack=True, 
                         on_message_callback=on_message_received)
 
 
@@ -74,8 +88,12 @@ def process_publisher(message_body):
         message_body (_type_): A JSON objecto containing the employees
         pictures and names.
     """
+    # Get enviromental variables
+    host = os.environ['RABBIT_HOST']
+    port = os.environ['RABBIT_PORT']
+    queue = os.environ['RABBIT_PRODUCER_QUEUE']
     # create a connection to the locally running RabbitMQ Message Broker
-    connection_parameters = pika.ConnectionParameters('localhost')
+    connection_parameters = pika.ConnectionParameters(host=host, port=port)
 
     connection = pika.BlockingConnection(connection_parameters)
 
@@ -83,9 +101,9 @@ def process_publisher(message_body):
     channel = connection.channel() # We don't give a name because we're using the default channel
 
     # Declaring a queue
-    channel.queue_declare(queue='emotions-managment')
+    channel.queue_declare(queue=queue)
 
-    channel.basic_publish(exchange='', routing_key='emotions-managment', body=message_body)
+    channel.basic_publish(exchange='', routing_key=queue, body=message_body)
 
     print("New data published....")
 

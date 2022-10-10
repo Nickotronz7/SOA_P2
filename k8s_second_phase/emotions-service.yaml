@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emotions-service
+  labels:
+    app: emotions-service
+spec:
+  selector:
+    matchLabels:
+      app: emotions-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: emotions-service
+    spec:
+      containers:
+      - name: emotions-service
+        image: acbdo/emotions
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: RABBIT_HOST 
+          value: "rabbitmq-0.rabbitmq.rabbits.svc.cluster.local"
+        - name: RABBIT_PORT
+          value: "5672"
+        - name: RABBIT_CONSUMER_QUEUE
+          value: "load-images"
+        - name: RABBIT_PRODUCER_QUEUE
+          value: "emotions-managment"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emotions-service
+  labels:
+    app: emotions-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: emotions-service
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
