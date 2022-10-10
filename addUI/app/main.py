@@ -5,6 +5,7 @@ from tkinter.filedialog import askopenfile
 from tkinter import messagebox
 from event_processor import process_publisher
 from datetime import datetime
+import os
 
 #open tk window
 root = Tk() 
@@ -25,15 +26,17 @@ def open_file():
     if file is not None: 
         #read the file, convert to byte arrae and add it to the UI list if len(list)<=10
         image_readed = file.read()
+        #file name without path
+        clean_name=os.path.split(file.name)[1]
         encoded_image = base64.encodebytes(image_readed).decode('utf-8')
         images_bytearray_list.append(
             {
-                "name": "Nombre Empleado",
+                "name": clean_name,
                 "image": encoded_image
             }
         )
         if(len(images_bytearray_list)<=10):
-            label_list[len(images_bytearray_list)-1].config(text=file.name)
+            label_list[len(images_bytearray_list)-1].config(text=clean_name)
         else:
             messagebox.showwarning(title=None, message='Solo se pueden introducir 10 imágenes') 
         
