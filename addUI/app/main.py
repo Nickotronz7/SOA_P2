@@ -28,10 +28,11 @@ def open_file():
         image_readed = file.read()
         #file name without path
         clean_name=os.path.split(file.name)[1]
+        employee_name = clean_name.split('.')[0]
         encoded_image = base64.encodebytes(image_readed).decode('utf-8')
         images_bytearray_list.append(
             {
-                "name": clean_name,
+                "name": employee_name,
                 "image": encoded_image
             }
         )
@@ -55,9 +56,9 @@ def send_files():
     # Prepare a JSON Object with the necessary data
     json_object = {
         "date": date,
-        "employees": images_bytearray_list
+        "employees": "imagen"
     }
-                             
+                           
     process_publisher(json_object)
     
 
