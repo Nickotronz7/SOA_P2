@@ -1,4 +1,3 @@
-from logging import RootLogger
 from tkinter import * 
 import base64
 from tkinter.filedialog import askopenfile 
