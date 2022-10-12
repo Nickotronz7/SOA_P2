@@ -1,11 +1,13 @@
-# Pull Python image from Docker Hub
-FROM ubuntu:latest
+# Slim version of Python
+FROM python:3.8.12-slim
 
-RUN apt update
-RUN apt install python3 -y
+# Download Package Information
+RUN apt-get update -y
+
 RUN apt install python3-pip -y
-RUN echo 11 apt-get install tk -y
-#RUN echo 11 apt-get install python3-tk -y
+
+# Install Tkinter
+RUN apt-get install tk -y
 
 # Copy the modules
 COPY requirements.txt .
