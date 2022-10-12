@@ -1,4 +1,4 @@
-from tkinter import * 
+import tkinter as tk
 import base64
 from tkinter.filedialog import askopenfile 
 from tkinter import messagebox
@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 
 #open tk window
-root = Tk() 
+root = tk.Tk() 
 root.geometry('600x500') 
 root.title('AddUI')
 
@@ -15,8 +15,8 @@ root.title('AddUI')
 #stores the list with the images to be send. Needs 10
 images_bytearray_list=[]
 
-#label list
-label_list=[]
+#tk.Label list
+tk.Label_list=[]
   
 #open file and store it
 def open_file(): 
@@ -35,7 +35,7 @@ def open_file():
             }
         )
         if(len(images_bytearray_list)<=10):
-            label_list[len(images_bytearray_list)-1].config(text=clean_name)
+            tk.Label_list[len(images_bytearray_list)-1].config(text=clean_name)
         else:
             messagebox.showwarning(title=None, message='Solo se pueden introducir 10 imágenes') 
         
@@ -64,83 +64,83 @@ def send_files():
 #GUI
 
 #title frame
-title_frame = Frame(root)
-title_frame.pack(side=TOP)
+title_frame = tk.Frame(root)
+title_frame.pack(side='top')
 
 #title
-title=Label(title_frame, text="Add UI", font=("Arial Bold", 30), width=600, bg= '#0066CC', fg='white')
+title=tk.Label(title_frame, text="Add UI", font=("Arial Bold", 30), width=600, bg= '#0066CC', fg='white')
 title.pack(pady=3)
 
 
 #instructions on how to use the app
-instructions=Label(title_frame, text="Por favor, agrega 10 imágenes para enviar", font=("Arial Bold", 12))
+instructions=tk.Label(title_frame, text="Por favor, agrega 10 imágenes para enviar", font=("Arial Bold", 12))
 instructions.pack(pady=3)
 
-#label that indicate current images
-added_images=Label(title_frame, text="Imágenes agreagadas:", font=("Arial ", 12))
+#tk.Label that indicate current images
+added_images=tk.Label(title_frame, text="Imágenes agreagadas:", font=("Arial ", 12))
 added_images.pack(pady=3)
 
 
 #frame with the images names
 
-images_names_frame = Frame(root, height=350)
-images_names_frame.pack(side=TOP)
+images_names_frame = tk.Frame(root, height=350)
+images_names_frame.pack(side='top')
 
-#labels for the 10 images
-label1=Label(images_names_frame, text='' , font=("Arial", 12))
-label1.pack(side=TOP)
+#tk.Labels for the 10 images
+tk.Label1=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label1.pack(side='top')
 
-label2=Label(images_names_frame, text='' , font=("Arial", 12))
-label2.pack(side=TOP)
+tk.Label2=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label2.pack(side='top')
 
-label3=Label(images_names_frame, text='' , font=("Arial", 12))
-label3.pack(side=TOP)
+tk.Label3=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label3.pack(side='top')
 
-label4=Label(images_names_frame, text='' , font=("Arial", 12))
-label4.pack(side=TOP)
+tk.Label4=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label4.pack(side='top')
 
-label5=Label(images_names_frame, text='' , font=("Arial", 12))
-label5.pack(side=TOP)
+tk.Label5=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label5.pack(side='top')
 
-label6=Label(images_names_frame, text='' , font=("Arial", 12))
-label6.pack(side=TOP)
+tk.Label6=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label6.pack(side='top')
 
-label7=Label(images_names_frame, text='' , font=("Arial", 12))
-label7.pack(side=TOP)
+tk.Label7=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label7.pack(side='top')
 
-label8=Label(images_names_frame, text='' , font=("Arial", 12))
-label8.pack(side=TOP)
+tk.Label8=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label8.pack(side='top')
 
-label9=Label(images_names_frame, text='' , font=("Arial", 12))
-label9.pack(side=TOP)
+tk.Label9=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label9.pack(side='top')
 
-label10=Label(images_names_frame, text='' , font=("Arial", 12))
-label10.pack(side=TOP)
+tk.Label10=tk.Label(images_names_frame, text='' , font=("Arial", 12))
+tk.Label10.pack(side='top')
 
-buttons_frame = Frame(root)
-buttons_frame.pack(side=LEFT)
+buttons_frame = tk.Frame(root)
+buttons_frame.pack(side='left')
 
 #add references to list
-label_list.append(label1)
-label_list.append(label2)
-label_list.append(label3)
-label_list.append(label4)
-label_list.append(label5)
-label_list.append(label6)
-label_list.append(label7)
-label_list.append(label8)
-label_list.append(label9)
-label_list.append(label10)
+tk.Label_list.append(tk.Label1)
+tk.Label_list.append(tk.Label2)
+tk.Label_list.append(tk.Label3)
+tk.Label_list.append(tk.Label4)
+tk.Label_list.append(tk.Label5)
+tk.Label_list.append(tk.Label6)
+tk.Label_list.append(tk.Label7)
+tk.Label_list.append(tk.Label8)
+tk.Label_list.append(tk.Label9)
+tk.Label_list.append(tk.Label10)
 
 #trigers the open file function
-search_btn = Button(buttons_frame, text ='Seleccionar imagen', command = open_file, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
-search_btn.pack(side=LEFT,padx=10) 
+search_btn = tk.Button(buttons_frame, text ='Seleccionar imagen', command = open_file, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
+search_btn.pack(side='left',padx=10) 
 
 #trigers the send files function
-search_btn = Button(buttons_frame, text ='Enviar imágenes', command = send_files, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
-search_btn.pack(side=LEFT,padx=5) 
+search_btn = tk.Button(buttons_frame, text ='Enviar imágenes', command = send_files, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
+search_btn.pack(side='left',padx=5) 
 
 
 
 #keeps the GUI loop  
-mainloop() 
+tk.mainloop() 
