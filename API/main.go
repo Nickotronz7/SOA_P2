@@ -194,7 +194,6 @@ func main() {
 		panic(err.Error())
 	}
 
-	fmt.Println("Creo la tabla")
 	go process_consumer()
 	handleRequests()
 }
