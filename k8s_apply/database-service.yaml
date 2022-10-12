@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: db-service
-        image: nickotronz7/soa_p2_api:latest
+        image: nickotronz7/soa_p2_db:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -27,6 +27,14 @@ spec:
           value: "5672"
         - name: RABBIT_CONSUMER_QUEUE
           value: "emotions-managment"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "turboAdmin"
+        - name: MYSQL_DATABASE
+          value: "db_emotions"
+        - name: MYSQL_USER
+          value: "emotionalUser"
+        - name: MYSQL_PASSWORD
+          value: "passwdEmotional"
 
 ---
 apiVersion: v1
