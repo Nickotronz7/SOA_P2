@@ -1,5 +1,5 @@
 # Slim version of Python
-FROM python:3.8.12-slim
+FROM python:3.9
 
 # Download Package Information
 RUN apt-get update -y
@@ -19,6 +19,6 @@ RUN pip3 install -r requirements.txt
 COPY ./app ./app
 
 # Entry command to start the container running the main module
-CMD ["./app/main.py"]
+CMD ["\app\main.py"]
 
 ENTRYPOINT ["python3"]

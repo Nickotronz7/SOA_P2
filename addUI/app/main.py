@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*-
 import tkinter as tk
 import base64
 from tkinter.filedialog import askopenfile 
@@ -38,13 +40,13 @@ def open_file():
         if(len(images_bytearray_list)<=10):
             tk.Label_list[len(images_bytearray_list)-1].config(text=clean_name)
         else:
-            messagebox.showwarning(title=None, message='Solo se pueden introducir 10 imágenes') 
+            messagebox.showwarning(title=None, message='Solo se pueden introducir 10 imagenes') 
         
         
 #sends the file to the broker
 def send_files():
     if(len(images_bytearray_list)<10):
-        messagebox.showwarning(title=None, message='Se deben introducir 10 imágenes')
+        messagebox.showwarning(title=None, message='Se deben introducir 10 imagenes')
         return 0
     # If the expected number of images is satisfied, then publish the data to the Broker
     print("Preparing the images...")
@@ -74,11 +76,11 @@ title.pack(pady=3)
 
 
 #instructions on how to use the app
-instructions=tk.Label(title_frame, text="Por favor, agrega 10 imágenes para enviar", font=("Arial Bold", 12))
+instructions=tk.Label(title_frame, text="Por favor, agrega 10 imagenes para enviar", font=("Arial Bold", 12))
 instructions.pack(pady=3)
 
 #tk.Label that indicate current images
-added_images=tk.Label(title_frame, text="Imágenes agreagadas:", font=("Arial ", 12))
+added_images=tk.Label(title_frame, text="Imagenes agreagadas:", font=("Arial ", 12))
 added_images.pack(pady=3)
 
 
@@ -138,7 +140,7 @@ search_btn = tk.Button(buttons_frame, text ='Seleccionar imagen', command = open
 search_btn.pack(side='left',padx=10) 
 
 #trigers the send files function
-search_btn = tk.Button(buttons_frame, text ='Enviar imágenes', command = send_files, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
+search_btn = tk.Button(buttons_frame, text ='Enviar imagenes', command = send_files, font=("Arial ", 12), bd=4, bg= '#1e91fe', fg='white') 
 search_btn.pack(side='left',padx=5) 
 
 
