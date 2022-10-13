@@ -1,10 +1,14 @@
 # Slim version of Python
 FROM python:3.9
 
-# Download Package Information
-RUN apt-get update -y
+USER root
 
-RUN apt install python3-pip -y
+
+# Download Package Information
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get update -y
+RUN apt-get install -y python-pika-doc
 
 # Install Tkinter
 RUN apt-get install tk -y
@@ -19,6 +23,7 @@ RUN pip3 install -r requirements.txt
 COPY ./app ./app
 
 # Entry command to start the container running the main module
-CMD ["\app\main.py"]
+CMD ["python3", "./app/main.py"]
 
-ENTRYPOINT ["python3"]
+
+
