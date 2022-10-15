@@ -4,6 +4,7 @@ from flask import redirect
 from event_processor import process_publisher
 from datetime import datetime
 import base64
+from index_strings import *
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ images_names_list=["","","","","","","","","",""]
 
 current_image_cont=0
 
-
+'''
 #open html file
 text_file1 = open("index1.html", "r")
 #read whole file to a string
@@ -25,7 +26,10 @@ index_string1 = text_file1.read()
 
 text_file2 = open("index2.html", "r")
 #read whole file to a string
-index_string2 = text_file2.read()
+index_string2 = text_file2.read()'''
+
+index_string1=index1()
+index_string2=index2()
   
 
 def open_file(file): 
