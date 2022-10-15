@@ -3,6 +3,7 @@ from flask import request
 from flask import redirect
 from event_processor import process_publisher
 from datetime import datetime
+import os
 import base64
 
 app = Flask(__name__)
@@ -155,4 +156,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8080, debug=True)
+    app.run(host="127.0.0.1", port=8080, debug=True)

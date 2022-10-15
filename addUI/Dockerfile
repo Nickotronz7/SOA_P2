@@ -1,17 +1,11 @@
-# Slim version of Python
-FROM python:3.9
+# Pull Python image from Docker Hub
+FROM ubuntu:latest
 
-USER root
+RUN apt update
+RUN apt install python3 -y
+RUN apt install python3-pip -y
 
-
-# Download Package Information
-RUN apt-get update && apt-get upgrade -y
-
-RUN apt-get update -y
-RUN apt-get install -y python-pika-doc
-
-# Install Tkinter
-RUN apt-get install tk -y
+WORKDIR /addui-app
 
 # Copy the modules
 COPY requirements.txt .
@@ -24,6 +18,3 @@ COPY ./app ./app
 
 # Entry command to start the container running the main module
 CMD ["python3", "./app/main.py"]
-
-
-

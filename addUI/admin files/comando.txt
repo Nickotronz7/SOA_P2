@@ -7,3 +7,7 @@ sudo docker run --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -it addui
+
+para kubernetes:
+
+minikube start --driver=docker
