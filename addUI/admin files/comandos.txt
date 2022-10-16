@@ -1,0 +1,17 @@
+xhost +
+
+sudo docker run --rm \
+    --network=host --privileged \
+    -v /dev:/dev \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:/root/.Xauthority \
+    -it addui
+
+para kubernetes:
+
+minikube start --driver=docker
+
+para flask
+
+docker run -d -p 5000:5000 addui
