@@ -1,29 +1,44 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: addui-service
-  labels:
-    app: addui-service
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: addui-service
-  replicas: 1
   template:
     metadata:
       labels:
         app: addui-service
     spec:
       containers:
-      - name: addui-service
-        image: calquito/soa_p2
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 84
-        env:
-        - name: RABBIT_HOST 
-          value: "rabbitmq-0.rabbitmq.rabbits.svc.cluster.local"
-        - name: RABBIT_PORT
-          value: "5672"
-        - name: RABBIT_PRODUCER_QUEUE
-          value: "load-images"
+        - name: addui-service
+          image: acbdo/addui
+          ports:
+          - containerPort: 5000
+          env:
+          - name: RABBIT_HOST 
+            value: "rabbitmq-0.rabbitmq.rabbits.svc.cluster.local"
+          - name: RABBIT_PORT
+            value: "5672"
+          - name: RABBIT_PRODUCER_QUEUE
+            value: "load-images"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: addui-service
+spec:
+  selector:
+    app: addui-service
+  ports:
+  - port: 5000
+    targetPort: 5000
+
+    
+
+
+
+

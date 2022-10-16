@@ -39,6 +39,7 @@ def open_file(file):
     image_readed = file.stream.read()
     #file name without path
     employee_name = file.filename
+    employee_name = employee_name.split('.')[0]
     encoded_image = base64.encodebytes(image_readed).decode('utf-8')
     images_bytearray_list.append(
         {
@@ -108,7 +109,7 @@ def send_files():
     print("Preparing the images...")
     # Get the current date
     now = datetime.now() # current date and time
-    date = now.strftime("%m/%d/%Y")
+    date = now.strftime("%d/%m/%Y")
     
     # Prepare a JSON Object with the necessary data
     json_object = {

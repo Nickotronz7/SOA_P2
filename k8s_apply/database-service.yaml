@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: db-service
-        image: nickotronz7/soa_p2_db:latest
+        image: acbdo/database
         imagePullPolicy: Always
         ports:
         - containerPort: 3306

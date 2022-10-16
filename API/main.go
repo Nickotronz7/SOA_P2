@@ -171,7 +171,7 @@ func process_consumer() {
 	go func ()  {
 		for d := range msgs {
 			log.Printf("Recived a message: %d", len(d.Body))
-			d.Ack(false)
+			d.Ack(true)
 			createNewRecord(d.Body)
 		}
 	} ()

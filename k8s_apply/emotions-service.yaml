@@ -29,3 +29,16 @@ spec:
           value: "load-images"
         - name: RABBIT_PRODUCER_QUEUE
           value: "emotions-managment"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emotions-service
+spec:
+  selector:
+    app: emotions-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http

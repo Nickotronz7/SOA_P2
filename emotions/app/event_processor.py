@@ -46,6 +46,7 @@ def on_message_received(ch, method, properties, body):
         "date": date,
         "employees": employees_emotions
     }
+    print(json_object)
     message = json.dumps(json_object)
     # Deliver the results to the next event processor by using the publisher connection
     publisher_thread = threading.Thread(target=process_publisher, args=(message,))
@@ -91,7 +92,7 @@ def process_publisher(message_body):
     # Get enviromental variables
     host = os.environ['RABBIT_HOST']
     port = os.environ['RABBIT_PORT']
-    queue = os.environ['RABBIT_PRODUCER_QUEUE']
+    queue2 = os.environ['RABBIT_PRODUCER_QUEUE']
     # create a connection to the locally running RabbitMQ Message Broker
     connection_parameters = pika.ConnectionParameters(host=host, port=port)
 
@@ -101,9 +102,9 @@ def process_publisher(message_body):
     channel = connection.channel() # We don't give a name because we're using the default channel
 
     # Declaring a queue
-    channel.queue_declare(queue=queue)
+    channel.queue_declare(queue=queue2)
 
-    channel.basic_publish(exchange='', routing_key=queue, body=message_body)
+    channel.basic_publish(exchange='', routing_key=queue2, body=message_body)
 
     print("New data published....")
 
