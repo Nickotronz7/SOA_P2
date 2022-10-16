@@ -4,8 +4,6 @@ Los servicios están almacenados en contenedores utilizando Docker que a su vez 
 
 Entre los servicios se encuentran:
 
-AddUI: Es el servicio con el que interactúa el usuario. Permite enviar imágenes al sistema para ser analizado. Se utiliza como una aplicación web, ejecutando el pod que la contiene y accediendo desde un navegador
-
 Pasos para su implementación
 1. Clonar el repositorio:
 
