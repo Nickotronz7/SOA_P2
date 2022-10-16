@@ -72,6 +72,8 @@ func returnAllRecords(w http.ResponseWriter, _ *http.Request) {
 
 	json.NewEncoder(w).Encode(finalResponse)
 
+	fmt.Println("Responded to resultsUI")
+
 	records = []dbRecord{}
 }
 
@@ -103,6 +105,7 @@ func createNewRecord(msg []byte) {
 			panic(err.Error())
 		}
 
+		fmt.Println("Insertado record bien")
 		defer insert.Close()
 	}
 }
@@ -137,7 +140,7 @@ func process_consumer() {
 
 	q, err := ch.QueueDeclare(
 		rabbit_queue, // queue name
-		true,         // duarable
+		false,         // duarable
 		false,        // delete when unused
 		false,        // exclusive
 		false,        // no-wait
@@ -171,7 +174,7 @@ func process_consumer() {
 	go func ()  {
 		for d := range msgs {
 			log.Printf("Recived a message: %d", len(d.Body))
-			d.Ack(false)
+			d.Ack(true)
 			createNewRecord(d.Body)
 		}
 	} ()
@@ -182,10 +185,11 @@ func process_consumer() {
 
 func main() {
 
-	db, err = sql.Open("mysql", "emotionalUser:passwdEmotional@tcp(mysql_DB)/db_emotions")
+	db, err = sql.Open("mysql", "emotionalUser:passwdEmotional@tcp(db-service)/db_emotions")
 	if err != nil {
 		panic(err.Error())
 	}
+	fmt.Println("Connected to DB")
 
 	defer db.Close()
 
@@ -193,6 +197,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+	fmt.Println("Table created")
 
 	go process_consumer()
 	handleRequests()
