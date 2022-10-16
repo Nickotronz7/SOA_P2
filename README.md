@@ -1,17 +1,17 @@
 SOA_P2 es una aplicación de microservicios con componentes web para la interacción del usuario. La aplicación web le permite al usuario seleccionar las imagenes de las personas a las que se les debe generar el análisis de las emociones y también observar el resultado final.
 
-Los servicios están almacenados en contenedores Docker que a su vez forman parte de minikube el cual implementa un cluster de Kuberntetes. 
+Los servicios están almacenados en contenedores utilizando Docker que a su vez son administrados utilizando minikube el cual implementa un cluster de Kuberntetes. 
 
 Pasos para su implementación
 1. Clonar el repositorio:
 
 git clone https://github.com/Nickotronz7/SOA_P2.git
 
-2. Se deben seguir los siguientes comandos para el despliegue del minikube de Kubernetes. 
-Nota: Asegurarse que la consola está en el folder k8s.
-Nota: Asegurarse que está autenticado con el proyecto de emotions service en GCP.
+Se deben seguir los siguientes comandos para el despliegue del minikube de Kubernetes. 
+Nota: Asegurarse que el direcctorio de la consola se encuentra en la raiz del repositorio
+Nota: Asegurarse que está autenticado con el proyecto de emotions service en GCP, puede utilizar este comando para hacerlo (gcloud auth application-default login)
 
-minikube start
+2. minikube start
 
 3. minikube addons enable gcp-auth
 
