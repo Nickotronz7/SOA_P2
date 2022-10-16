@@ -1,0 +1,10 @@
+# COMMANDS FOR DEPLOYING THE MINIKUBE KUBERNETES
+
+Notes: Make sure your console is outsite the k8s folder
+Notes: Make sure you are authenticated with the GCP project of emotions service
+
+1 - minikube start
+2 - minikube addons enable gcp-auth (Omitir si no se necesita analizar imágenes en las pruebas)
+3 - kubectl create ns rabbits
+4 - kubectl apply -n rabbits -f k8s_apply
+5 - kubectl -n rabbits port-forward rabbitmq-0 8080:15672
