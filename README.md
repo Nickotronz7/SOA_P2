@@ -1,4 +1,4 @@
-#SOA_P2
+# SOA_P2
 
 SOA_P2 es una aplicación de microservicios con componentes web para la interacción del usuario. La aplicación web le permite al usuario seleccionar las imagenes de las personas a las que se les debe generar el análisis de las emociones y también observar el resultado final.
 
@@ -39,7 +39,7 @@ Nota: Asegurarse que está autenticado con el proyecto de emotions service en GC
 - http://localhost:5000
 - http://localhost:3000
 
-##Servicios de SOA_P2
+## Servicios de SOA_P2
 | Servicio | Lenguaje | Description |
 |----------|----------|-------------|
 |AddUI|Python|Es una interfaz que permite al usuario seleccionar las 10 imagenes que requieren ser procesadas por el servicio Emotions|
