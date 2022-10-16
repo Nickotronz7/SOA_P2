@@ -25,7 +25,7 @@
 .header{
   width: 80vw;
   display: flex;
-  color:darkgoldenrod;
+  color:#fff000;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
