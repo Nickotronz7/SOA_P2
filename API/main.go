@@ -46,7 +46,12 @@ func homePage(w http.ResponseWriter, _ *http.Request) {
 	fmt.Println("Endpoint Hit: homePage")
 }
 
+func enableCors(w* http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func returnAllRecords(w http.ResponseWriter, _ *http.Request) {
+	enableCors(&w)
 	w.Header().Add("Content-Type", "JSON")
 
 	results, err := db.Query("SELECT create_time, name, emotion FROM EMPLEADO_EMOTIONS")
