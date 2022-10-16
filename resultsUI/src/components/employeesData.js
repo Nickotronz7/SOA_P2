@@ -14,7 +14,7 @@ class EmployeesData extends Component{
 
 
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('http://api:10000/allrecords')
         .then(response => {
             console.log(response)
             this.setState({employees_data: response.data})
@@ -23,11 +23,16 @@ class EmployeesData extends Component{
             console.log(error)
         })
     }
+    
+    refresh(){
+        window.location.reload();
+    }
 
     render(){
         const{ employees_data} = this.state
         return (
             <header className="App-header">
+            <button class="button-32" role="button" onClick={this.refresh}>Refresh</button>
             <h1>Employees Emotions</h1>
             <div className="header">
                 <p className="name" >Name</p>
@@ -37,7 +42,7 @@ class EmployeesData extends Component{
             <div className="container">
             
             
-            {employees_data.map((element,index) => {
+            {employees_data.response.map((element,index) => {
                 return (
                 <div key={index} className="tableLike">
                     <p className="name">{element.title}</p>
