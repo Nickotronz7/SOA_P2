@@ -1,3 +1,5 @@
+#SOA_P2
+
 SOA_P2 es una aplicación de microservicios con componentes web para la interacción del usuario. La aplicación web le permite al usuario seleccionar las imagenes de las personas a las que se les debe generar el análisis de las emociones y también observar el resultado final.
 
 Los servicios están almacenados en contenedores utilizando Docker que a su vez son administrados utilizando minikube el cual implementa un cluster de Kuberntetes. 
@@ -36,3 +38,13 @@ Nota: Asegurarse que está autenticado con el proyecto de emotions service en GC
 - http://localhost:15672
 - http://localhost:5000
 - http://localhost:3000
+
+##Servicios de SOA_P2
+| Servicio | Lenguaje | Description |
+|----------|----------|-------------|
+|AddUI|Python|Es una interfaz que permite al usuario seleccionar las 10 imagenes que requieren ser procesadas por el servicio Emotions|
+|Database|MySQL|Se encarga del almacenamiento de los datos de los empleado, sus nombre, emocion y la fecha que corresponda|
+|Backend|Go|Funciona como intermediario para poder almacenar en la base de datos toda la informacion ya analizada por el servicio de emotions y a su vez preveer esta informacion a ResultsUI|
+|Emotions|Python|Analiza las imagenes que recibe como entrada y dermina la emocion que refleja cada persona|
+|Broker|RabbitMQ, Docker Image|Su funcion es mantener las conexiones y controlar el trafico de datos por medio de mensajes asincronicos|
+|ResultsUI|React|Se encarga de desplegar los datos referentes a los empleados una vez ya han sido analizados. Este servicio genera solicitudes HTTP GET al backend|
