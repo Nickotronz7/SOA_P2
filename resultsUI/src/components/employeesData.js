@@ -1,6 +1,8 @@
 import React, {Component } from 'react'
 import axios from 'axios'
 
+//Employee Component 
+//State: Array with json data from http request
 class EmployeesData extends Component{
     constructor(props) {
         super(props)
@@ -11,7 +13,9 @@ class EmployeesData extends Component{
     }
 
 
-
+    //ComponentDidMount() is a hook that gets invoked right after a React component 
+    //has been mounted aka after the first render() lifecycle.
+    //Allow us to update the component with new state when a promise resolves. 
     componentDidMount() {
         var host = process.env.REACT_APP_BACKEND;
         axios.get("http://" + host + ":10000/allrecords")
@@ -24,11 +28,13 @@ class EmployeesData extends Component{
         })
     }
     
+    //Reload page to mount component
     refresh(){
         window.location.reload();
     }
-
+    
     render(){
+        //Contain the array data from the json and is updated with the employeeData's state
         const{ employees_data} = this.state
         return (
             <header className="App-header">
@@ -40,7 +46,6 @@ class EmployeesData extends Component{
                 <p className="date">Date</p>
             </div>
             <div className="container">
-            
             
             {employees_data.map((element,index) => {
                 return (
