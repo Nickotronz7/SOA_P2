@@ -9,29 +9,47 @@ Entre los servicios se encuentran:
 Pasos para su implementación
 1. Clonar el repositorio:
 
-git clone https://github.com/Nickotronz7/SOA_P2.git
+`git clone https://github.com/Nickotronz7/SOA_P2.git`
 
 Se deben seguir los siguientes comandos para el despliegue del minikube de Kubernetes. 
 Nota: Asegurarse que el direcctorio de la consola se encuentra en la raiz del repositorio
 Nota: Asegurarse que está autenticado con el proyecto de emotions service en GCP, puede utilizar este comando para hacerlo (gcloud auth application-default login)
 
-2. minikube start
+2. Inicial minikube
 
-3. minikube addons enable gcp-auth
+  `minikube start`
 
-4. kubectl create ns rabbits
+3. Habilitar el addon para el uso de credenciales con el API de google
 
-5. kubectl apply -n rabbits -f k8s_apply
+  `minikube addons enable gcp-auth`
 
-6. kubectl -n rabbits get pods
+4. Crear de un namespace
 
-7. kubectl -n rabbits port-forward rabbitmq-0 15672:15672
+  `kubectl create ns rabbits`
 
-8. kubectl -n rabbits port-forward deployment/backend-service 10000:10000
+5. Hacer una apply
 
-9. kubectl -n rabbits port-forward deployment/resultsui-service 3000:3000
+  `kubectl apply -n rabbits -f k8s_apply`
 
-10. kubectl -n rabbits port-forward deployment/addui-service 5000:5000
+6. Verfiicar el estado de los pods
+
+  `kubectl -n rabbits get pods`
+
+7. Exponer puertos para el dashboard de rabbit
+
+  `kubectl -n rabbits port-forward rabbitmq-0 15672:15672`
+
+8. Habilitar puertos del backend
+
+  `kubectl -n rabbits port-forward deployment/backend-service 10000:10000`
+
+9. Habilitar puertos del resultui
+
+  `kubectl -n rabbits port-forward deployment/resultsui-service 3000:3000`
+
+10. Habilitar puertos del resultui
+
+  `kubectl -n rabbits port-forward deployment/addui-service 5000:5000`
 
 11. Para acceder a los componentes con interfaz debe ingresar como url en el navegador las siguientes direcciones:
 
