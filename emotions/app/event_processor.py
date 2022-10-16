@@ -8,7 +8,6 @@ def on_message_received(ch, method, properties, body):
     """
     This function gets excecuted when the consumer connection receives
     a new message from the load-images queue.
-
     Args:
         ch (_type_): Not used
         method (_type_): Not used
@@ -84,7 +83,6 @@ def process_publisher(message_body):
     """
     This function creates a new connection with the broker and sends a message body
     to the queue established.
-
     Args:
         message_body (_type_): A JSON objecto containing the employees
         pictures and names.
@@ -109,4 +107,3 @@ def process_publisher(message_body):
     print("New data published....")
 
     connection.close()
-    
