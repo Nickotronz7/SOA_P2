@@ -18,6 +18,9 @@ spec:
           image: acbdo/results-ui
           ports:
           - containerPort: 3000
+          env:
+          - name: REACT_APP_BACKEND 
+            value: "127.0.0.1"
 
 ---
 apiVersion: v1

@@ -18,7 +18,7 @@ def index1():
         </div>
         <h2 style="text-align:center; font-family:Arial; font-weight: bold;">Por favor, agrega 10 im&aacutegenes para enviar</h2>
         <h3 style="text-align:center; font-family:Arial;">Im&aacutegenes agregadas:</h2>
-        <div style= 'height:350px'>
+        <div style= 'height:500px'>
 
 """
 

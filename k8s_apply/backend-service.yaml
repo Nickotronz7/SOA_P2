@@ -6,19 +6,19 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: api
+      app: backend-service
       tier: backend-service
       track: stable
   replicas: 1
   template:
     metadata:
       labels:
-        app: api
+        app: backend-service
         tier: backend-service
         track: stable
     spec:
       containers:
-        - name: api
+        - name: backend-service
           image: nickotronz7/soa_p2_api:latestv2
           ports:
             - name: http
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: backend-service
 spec:
   selector:
-    app: api
+    app: backend-service
     tier: backend-service
   ports:
   - protocol: TCP

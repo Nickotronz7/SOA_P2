@@ -13,10 +13,11 @@ class EmployeesData extends Component{
 
 
     componentDidMount() {
-        axios.get('http://api:10000/allrecords')
+        var host = process.env.REACT_APP_BACKEND;
+        axios.get("http://" + host + ":10000/allrecords")
         .then(response => {
             console.log(response.data)
-            this.setState({employees_data: response.data})
+            this.setState({employees_data: response.data.response})
         })
         .catch(error => {
             console.log(error)
