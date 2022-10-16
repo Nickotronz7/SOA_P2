@@ -3,5 +3,6 @@ images
 *.exe
 .DS_Store
 API/API
-schemas/*
+database/schemas/
 .vscode
+schemas/

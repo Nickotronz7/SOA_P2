@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-service
+spec:
+  selector:
+    matchLabels:
+      app: backend-service
+      tier: backend-service
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend-service
+        tier: backend-service
+        track: stable
+    spec:
+      containers:
+        - name: backend-service
+          image: nickotronz7/soa_p2_api:latestv2
+          ports:
+            - name: http
+              containerPort: 10000
+          env:
+          - name: RABBIT_HOST 
+            value: "rabbitmq-0.rabbitmq.rabbits.svc.cluster.local"
+          - name: RABBIT_PORT
+            value: "5672"
+          - name: RABBIT_CONSUMER_QUEUE
+            value: "emotions-managment"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend-service
+    tier: backend-service
+  ports:
+  - protocol: TCP
+    port: 10000
+    targetPort: http
