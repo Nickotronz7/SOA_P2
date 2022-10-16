@@ -26,7 +26,7 @@ def index1():
 def index2():
     return"""
     </div>
-        <form style='display: inline-block;' action = "http://localhost:8080/uploader" method = "POST" enctype = "multipart/form-data">
+        <form style='display: inline-block;' action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
             <label style="color:white; font-family:Arial; background-color:#0066CC; padding: 10px; margin: 20px;">
                 Seleccionar imagen
                 <input type="file" name="file">
@@ -37,7 +37,7 @@ def index2():
             </label>
         </form>
 
-        <form style='display: inline-block;' action = "http://localhost:8080/send_to_broker" method = "POST" enctype = "multipart/form-data" style="margin: 50px;" >
+        <form style='display: inline-block;' action = "http://localhost:5000/send_to_broker" method = "POST" enctype = "multipart/form-data" style="margin: 50px;" >
             <label style="color:white; font-family:Arial; background-color:#0066CC; padding: 10px; margin: 20px;">
                 Enviar im&aacutegenes
                 <input type="submit" name="file">
